@@ -19,3 +19,17 @@ class MyDrawer extends StatelessWidget {
     );
   }
 }
+
+class MyFloatingActionButton extends StatelessWidget {
+  const MyFloatingActionButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      child: Icon(Icons.add),
+      onPressed: () => {
+
+      }
+    );
+  }
+}

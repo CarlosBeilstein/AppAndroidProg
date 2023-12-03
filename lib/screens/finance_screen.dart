@@ -49,18 +49,7 @@ class FinanceScreen extends StatelessWidget {
       drawer: MyDrawer(),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 25.0),
-            child: Center(
-              child: Container(
-                color: Colors.green,
-                child: Padding(
-                  padding: const EdgeInsets.all(25.0),
-                  child: Text("Test"),
-                ),
-              ),
-            ),
-          ),
+          
         ],
       ),
     );
