@@ -1,3 +1,4 @@
+import 'package:android_prog_app/screens/finance_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'news_screen.dart';
@@ -14,35 +15,36 @@ class HomeScreen extends StatelessWidget {
             Expanded(
               child: Text("Home"),
             ),
-            Spacer(), // Add Spacer widget to push the Image to the right
-            Image.asset(
-              'lib/assets/images/Logo.png',
-              height: 50,
-              width: 50,
-            ),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_filled),
+            icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.camera_alt),
-            label: 'Camera',
+            icon: Icon(Icons.newspaper),
+            label: 'News',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+            icon: Icon(Icons.auto_graph),
+            label: 'Finances',
           ),
         ],
         onTap: (index) {
           if(index == 1) {
+            Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => NewsScreen())
+            );
+          } else if(index == 2) {
+            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FinanceScreen())
             );
           }
         },
