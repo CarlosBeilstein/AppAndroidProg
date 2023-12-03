@@ -1,3 +1,4 @@
+import 'package:android_prog_app/screens/drawer.dart';
 import 'package:android_prog_app/screens/finance_screen.dart';
 import 'package:android_prog_app/screens/homescreen.dart';
 import 'package:flutter/material.dart';
@@ -9,13 +10,10 @@ class NewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            Expanded(
-              child: Text("Home"),
-            ),
-          ],
-        ),
+        title: Padding(
+          padding: const EdgeInsets.only(right: 50),
+          child: Center(child: Text("News")),
+        )
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
@@ -34,11 +32,13 @@ class NewsScreen extends StatelessWidget {
         ],
         onTap: (index) {
           if(index == 2) {
+            Navigator.pop(context, true);
             Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => FinanceScreen())
             );
           } else if(index == 0){
+            Navigator.pop(context, true);
             Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => HomeScreen())
@@ -46,7 +46,7 @@ class NewsScreen extends StatelessWidget {
           }
         },
       ),
-      drawer: Drawer(),
+      drawer: MyDrawer(),
       body: Column(
         children: [
           Padding(
@@ -61,22 +61,6 @@ class NewsScreen extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-            child: Center(
-              child: Container(
-                color: Colors.blue,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Image.asset(
-                    'lib/assets/images/QRTest.png',
-                    height: 300,
-                    width: 300,
-                  ),
-                ),
-              ),
-            ),
-          )
         ],
       ),
     );

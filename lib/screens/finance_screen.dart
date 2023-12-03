@@ -1,5 +1,5 @@
+import 'package:android_prog_app/screens/drawer.dart';
 import 'package:flutter/material.dart';
-
 import 'homescreen.dart';
 import 'news_screen.dart';
 
@@ -10,13 +10,10 @@ class FinanceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            Expanded(
-              child: Text("Home"),
-            ),
-          ],
-        ),
+        title: Padding(
+          padding: const EdgeInsets.only(right: 50),
+          child: Center(child: Text("Finances")),
+        )
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
@@ -35,13 +32,13 @@ class FinanceScreen extends StatelessWidget {
         ],
         onTap: (index) {
           if(index == 0) {
-            Navigator.pop(context);
+            Navigator.pop(context, true);
             Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => HomeScreen())
             );
           } else if(index == 1) {
-            Navigator.pop(context);
+            Navigator.pop(context, true);
             Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => NewsScreen())
@@ -49,7 +46,7 @@ class FinanceScreen extends StatelessWidget {
           }
         },
       ),
-      drawer: Drawer(),
+      drawer: MyDrawer(),
       body: Column(
         children: [
           Padding(

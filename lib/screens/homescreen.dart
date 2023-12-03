@@ -1,3 +1,4 @@
+import 'package:android_prog_app/screens/drawer.dart';
 import 'package:android_prog_app/screens/finance_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -10,12 +11,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            Expanded(
-              child: Text("Home"),
-            ),
-          ],
+        title: Padding(
+          padding: const EdgeInsets.only(right: 50.0),
+          child: Center(child: Text("Home")),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -35,13 +33,13 @@ class HomeScreen extends StatelessWidget {
         ],
         onTap: (index) {
           if(index == 1) {
-            Navigator.pop(context);
+            Navigator.pop(context, true);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => NewsScreen())
             );
           } else if(index == 2) {
-            Navigator.pop(context);
+            Navigator.pop(context, true);
             Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => FinanceScreen())
@@ -49,38 +47,21 @@ class HomeScreen extends StatelessWidget {
           }
         },
       ),
-      drawer: Drawer(),
+      drawer: MyDrawer(),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 25.0),
-            child: Center(
-              child: Container(
-                color: Colors.green,
-                child: Padding(
-                  padding: const EdgeInsets.all(25.0),
-                  child: Text("Test"),
-                ),
-              ),
-            ),
+          Row(
+            children: [
+
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-            child: Center(
-              child: Container(
-                color: Colors.blue,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Image.asset(
-                    'lib/assets/images/QRTest.png',
-                    height: 300,
-                    width: 300,
-                  ),
-                ),
-              ),
-            ),
-          )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => {
+
+        }
       ),
     );
   }
