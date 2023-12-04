@@ -1,4 +1,5 @@
 import 'package:android_prog_app/screens/drawer.dart';
+import 'package:android_prog_app/screens/news_screen_two.dart';
 import 'package:flutter/material.dart';
 import 'homescreen.dart';
 import 'news_screen.dart';
@@ -32,16 +33,16 @@ class FinanceScreen extends StatelessWidget {
         ],
         onTap: (index) {
           if(index == 0) {
-            Navigator.pop(context, true);
+            //Navigator.pop(context, true);
             Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => HomeScreen())
             );
           } else if(index == 1) {
-            Navigator.pop(context, true);
+            //Navigator.pop(context, true);
             Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => NewsScreen())
+                MaterialPageRoute(builder: (context) => NewsScreenTwo())
             );
           }
         },

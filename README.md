@@ -4,13 +4,10 @@ Android App Dev
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Das ist die App für das Bachelor Wahlpflicht/ Pflichtmodul AndroidProgrammierung unter Prof. Milde
 
-A few resources to get you started if this is your first Flutter project:
+Auf dem Start/Home Screen kann man ......
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Die App zeigt, mit 2 weiteren Screens, zum einen aktuelle Nachrichten an und auf dem anderen Screen eine aktuelle 
+Lage ausgewählter Aktienverläufe an.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

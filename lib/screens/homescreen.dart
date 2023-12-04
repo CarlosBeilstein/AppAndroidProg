@@ -1,5 +1,6 @@
 import 'package:android_prog_app/screens/drawer.dart';
 import 'package:android_prog_app/screens/finance_screen.dart';
+import 'package:android_prog_app/screens/news_screen_two.dart';
 import 'package:flutter/material.dart';
 
 import 'news_screen.dart';
@@ -33,13 +34,13 @@ class HomeScreen extends StatelessWidget {
         ],
         onTap: (index) {
           if(index == 1) {
-            Navigator.pop(context, true);
+            //Navigator.pop(context, true);
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => NewsScreen())
+              MaterialPageRoute(builder: (context) => NewsScreenTwo())
             );
           } else if(index == 2) {
-            Navigator.pop(context, true);
+            //Navigator.pop(context, true);
             Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => FinanceScreen())
@@ -50,11 +51,7 @@ class HomeScreen extends StatelessWidget {
       drawer: MyDrawer(),
       body: Column(
         children: [
-          Row(
-            children: [
 
-            ],
-          ),
         ],
       ),
       floatingActionButton: MyFloatingActionButton(),
