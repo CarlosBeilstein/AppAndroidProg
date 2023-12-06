@@ -1,14 +1,17 @@
 import 'package:android_prog_app/model/getx_controller.dart';
 import 'package:android_prog_app/screens/detailed_news_screen.dart';
+import 'package:android_prog_app/screens/news_screen_two.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-class NewsService {
-  static Future<List<Map<String, dynamic>>> fetchNews() async {
-    var uri = Uri.parse('https://newsapi.org/v2/everything?domains=wsj.com&apiKey=e1eedf371f2642df8eb2d1a0bffc197f');
+class NewsService extends NewsScreenTwo {
+
+  static Future<List<Map<String, dynamic>>> fetchNews(String country, String category) async {
+    var apiKey = 'e1eedf371f2642df8eb2d1a0bffc197f';
+    var uri = Uri.parse('https://newsapi.org/v2/top-headlines?country=$country&category=$category&apiKey=$apiKey');
     var response = await http.get(uri);
 
     if (response.statusCode == 200) {
