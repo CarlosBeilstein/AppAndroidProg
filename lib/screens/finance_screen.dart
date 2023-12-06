@@ -2,7 +2,6 @@ import 'package:android_prog_app/screens/drawer.dart';
 import 'package:android_prog_app/screens/news_screen_two.dart';
 import 'package:flutter/material.dart';
 import 'homescreen.dart';
-import 'news_screen.dart';
 
 class FinanceScreen extends StatelessWidget {
   const FinanceScreen({super.key});

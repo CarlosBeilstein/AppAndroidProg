@@ -8,7 +8,7 @@ import 'dart:convert' as convert;
 
 class NewsService {
   static Future<List<Map<String, dynamic>>> fetchNews() async {
-    var uri = Uri.parse('https://newsapi.org/v2/everything?domains=wsj.com&apiKey=e1eedf371f2642df8eb2d1a0bffc197f');
+    var uri = Uri.parse('https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=e1eedf371f2642df8eb2d1a0bffc197f');
     var response = await http.get(uri);
 
     if (response.statusCode == 200) {
@@ -34,7 +34,7 @@ class NewsService {
   }
 }
 
-class NewsContainer extends StatelessWidget {
+class TechNewsContainer extends StatelessWidget {
 
   var _controller = Get.put(NewsController());
 
@@ -46,7 +46,7 @@ class NewsContainer extends StatelessWidget {
   late String publishedAt;
   late String content;
 
-  NewsContainer({
+  TechNewsContainer({
     required this.author,
     required this.title,
     required this.description,
@@ -62,7 +62,6 @@ class NewsContainer extends StatelessWidget {
       onTap: () {
         _controller.newsImageLink.value = urlToImage;
         _controller.newsContent.value = content;
-        _controller.newsWebsiteLink.value = url;
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => DetailedNewsScreen()),
@@ -88,7 +87,7 @@ class NewsContainer extends StatelessWidget {
           children: [
             Image.network(urlToImage),
             Padding(
-              padding: const EdgeInsets.only(left: 10.0, top: 10.0, bottom: 5.0),
+              padding: const EdgeInsets.all(18.0),
               child: Row(
                 children: [
                   Text(

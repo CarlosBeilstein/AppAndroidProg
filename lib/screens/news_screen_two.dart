@@ -59,9 +59,46 @@ class _NewsScreenState extends State<NewsScreenTwo> {
           child: Center(child: Text("News")),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.newspaper),
+            label: 'News',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.auto_graph),
+            label: 'Finances',
+          ),
+        ],
+        onTap: (index) {
+          if(index == 0) {
+            //Navigator.pop(context, true);
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen())
+            );
+          } else if(index == 2) {
+            //Navigator.pop(context, true);
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FinanceScreen())
+            );
+          }
+        },
+      ),
+      drawer: MyDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Row(
+              children: [
+
+              ],
+            ),
             // Display loading indicator if newsList is null
             if (newsList.isEmpty)
               Center(child: CircularProgressIndicator())
@@ -74,20 +111,26 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                 author: news['author'] ?? 'Unknown',
                 title: news['title'] ?? '',
                 description: news['description'] ?? '',
+                urlToImage: news['urlToImage'] ?? 'https://imgs.search.brave.com/XirYFvHdKk-Jn7nAzfal3dRlYqmsiSdEH1IkC74zBHA/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9wbHVz/cG5nLmNvbS9pbWct/cG5nL3NocmVrLWRv/bmtleS1wbmctc2Nv/cmUtMC1jYXRjaC1z/aHJlay0xODkucG5n',
+                url: news['url'],
+                publishedAt: news['publishedAt'] ?? 'Publishdate unknown',
+                content: news['content'],
               )),
             // Button to load more items
             Padding(
-              padding: const EdgeInsets.all(18.0),
+              padding: const EdgeInsets.only(top: 10.0, right: 18.0, left: 18.0),
               child: ElevatedButton(
                 onPressed: loadMoreItems,
                 child: Text('More'),
               ),
             ),
-            ElevatedButton(onPressed: loadPreviousItems, child: Text('Previous'))
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: ElevatedButton(onPressed: loadPreviousItems, child: Text('Previous')),
+            )
           ],
         ),
       ),
-      // ... (rest of your Scaffold)
     );
   }
 }

@@ -3,7 +3,6 @@ import 'package:android_prog_app/screens/finance_screen.dart';
 import 'package:android_prog_app/screens/news_screen_two.dart';
 import 'package:flutter/material.dart';
 
-import 'news_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
