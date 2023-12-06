@@ -5,6 +5,7 @@ import 'package:android_prog_app/screens/homescreen.dart';
 import 'package:android_prog_app/model/news_objects.dart';
 import 'package:get/get.dart';
 
+//Screen displaying the parsed News
 class NewsScreenTwo extends StatefulWidget {
   const NewsScreenTwo({Key? key}) : super(key: key);
 
@@ -13,22 +14,30 @@ class NewsScreenTwo extends StatefulWidget {
 }
 
 class _NewsScreenState extends State<NewsScreenTwo> {
+
+  //List that saves the news
   late List<Map<String, dynamic>> newsList = [];
+
+  //In order not to load too much data onto the Screen at a time
   int itemsPerPage = 15;
   int currentPage = 0;
+
+  //Search variables for Radio selection and Searchbar
   String? selectedCountry = 'de';
-  String? selectedCategory = 'business';
-  late String urlToParse = 'https://newsapi.org/v2/everything?domains=wsj.com&apiKey=e1eedf371f2642df8eb2d1a0bffc197f';
+  String? selectedCategory = 'general';
+  String? searchedItem = '';
 
   @override
   void initState() {
     super.initState();
-    fetchData(selectedCountry!, selectedCategory!);
+    fetchData(selectedCountry!, selectedCategory!, searchedItem!);
   }
 
-  Future<void> fetchData(String country, String category) async {
+  //Fetching Data from API for the first time
+  Future<void> fetchData(
+      String country, String category, String searchItem) async {
     try {
-      var result = await NewsService.fetchNews(country, category);
+      var result = await NewsService.fetchNews(country, category, searchItem);
       setState(() {
         // Append the new data to the existing list
         newsList.addAll(result);
@@ -38,10 +47,11 @@ class _NewsScreenState extends State<NewsScreenTwo> {
     }
   }
 
-  //reload page with new data
+  //refetching changed data after changing search option (through radio or search bar)
   Future<void> refetchData() async {
     try {
-      var result = await NewsService.fetchNews(selectedCountry!, selectedCategory!);
+      var result =
+          await NewsService.fetchNews(selectedCountry!, selectedCategory!, searchedItem!);
       setState(() {
         newsList = result;
       });
@@ -50,16 +60,17 @@ class _NewsScreenState extends State<NewsScreenTwo> {
     }
   }
 
+
   void loadMoreItems() {
     // Increment the current page and fetch more data
     currentPage++;
-    fetchData(selectedCountry!, selectedCategory!);
+    fetchData(selectedCountry!, selectedCategory!, searchedItem!);
   }
 
   void loadPreviousItems() {
     if (currentPage > 0) {
       currentPage--;
-      fetchData(selectedCountry!, selectedCategory!);
+      fetchData(selectedCountry!, selectedCategory!, searchedItem!);
     } else {
       print('No more previous data');
     }
@@ -74,6 +85,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
           child: Center(child: Text("News")),
         ),
       ),
+      //Route through the 3 Pages with NavBar
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
@@ -89,6 +101,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
             label: 'Finances',
           ),
         ],
+
         onTap: (index) {
           if (index == 0) {
             //Navigator.pop(context, true);
@@ -102,12 +115,15 @@ class _NewsScreenState extends State<NewsScreenTwo> {
         },
       ),
       drawer: MyDrawer(),
+      //Display of the newsContainer
       body: SingleChildScrollView(
         child: Column(
           children: [
             SingleChildScrollView(
+              //Displaying the Search Options (Radio and Searchbar)
               child: Row(
                 children: [
+                  //Radio to select which country to choose from
                   Column(
                     children: [
                       const Text("Choose Country"),
@@ -136,9 +152,21 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                       const Text('German'),
                     ],
                   ),
+                  //Radio to select which Category to select
                   Column(
                     children: [
                       const Text("Choose Category"),
+                      Radio<String>(
+                        value: 'general',
+                        groupValue: selectedCategory,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedCategory = value;
+                          });
+                          refetchData();
+                        },
+                      ),
+                      const Text('General'),
                       Radio<String>(
                         value: 'business',
                         groupValue: selectedCategory,
@@ -172,25 +200,34 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                         },
                       ),
                       const Text('Sports'),
-                      Radio<String>(
-                        value: 'general',
-                        groupValue: selectedCategory,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedCategory = value;
-                          });
+                    ],
+                  ),
+                  //Searchbar
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Search...',
+                          border: OutlineInputBorder(),
+                        ),
+                        onSubmitted: (query) {
+                          searchedItem = query;
+                          print(searchedItem?.length);
                           refetchData();
                         },
                       ),
-                      const Text('General'),
-                    ],
-                  )
+                    ),
+                  ),
                 ],
               ),
             ),
             // Display loading indicator if newsList is null
             if (newsList.isEmpty)
-              const Center(child: CircularProgressIndicator())
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: const Center(child: Text("No Search matches \nPlease look for a different topic", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)),
+              )
             else
               // Display news containers
               ...newsList
@@ -208,19 +245,23 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                         content: news['content'] ?? '',
                       )),
             // Button to load more or previous items
-            Padding(
-              padding:
-                  const EdgeInsets.only(top: 10.0, right: 18.0, left: 18.0),
-              child: ElevatedButton(
-                onPressed: loadMoreItems,
-                child: Text('More'),
+
+            //If the list is empty theres no reason to show the Buttons that load more or previous News
+            if(newsList.isNotEmpty)
+              Padding(
+                padding:
+                    const EdgeInsets.only(top: 10.0, right: 18.0, left: 18.0),
+                child: ElevatedButton(
+                  onPressed: loadMoreItems,
+                  child: Text('More'),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: ElevatedButton(
-                  onPressed: loadPreviousItems, child: Text('Previous')),
-            )
+            if(newsList.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: ElevatedButton(
+                    onPressed: loadPreviousItems, child: Text('Previous')),
+              )
           ],
         ),
       ),

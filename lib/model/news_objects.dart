@@ -9,24 +9,42 @@ import 'dart:convert' as convert;
 
 class NewsService extends NewsScreenTwo {
 
-  static Future<List<Map<String, dynamic>>> fetchNews(String country, String category) async {
+  //Method to prase Data from NewsAPI
+  static Future<List<Map<String, dynamic>>> fetchNews(String country, String category, String searchedItem) async {
+    //API key used for website
     var apiKey = 'e1eedf371f2642df8eb2d1a0bffc197f';
+    //parse following link if searchbar hasn't been used
     var uri = Uri.parse('https://newsapi.org/v2/top-headlines?country=$country&category=$category&apiKey=$apiKey');
+    if(searchedItem.length > 0) {
+      //use this link if searchbar has been used
+      uri = Uri.parse('https://newsapi.org/v2/top-headlines?q=$searchedItem&country=$country&category=$category&apiKey=$apiKey');
+    }
     var response = await http.get(uri);
 
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body) as Map<String, dynamic>;
       List<dynamic> articles = jsonResponse['articles'];
 
-      // Modify the parsing logic to add a line break after a comma in the text
+      // Modify the parsing logic to add a line break after a comma in the text to prevent spillage over screenedges
       List<Map<String, dynamic>> parsedArticles = articles.map<Map<String, dynamic>>((article) {
         if (article['author'] is String && article['author'].contains(',')) {
-          // If 'author' contains a comma, replace it with a comma and a line break
+          // If 'author' contains a comma, replace it with a comma and a line break (there can be multiple authors which would cause spillage)
           article['author'] = article['author'].replaceAll(',', ',\n');
         }
+        //remove time of day the article was published (unnecessary information and can cause spillage)
         if (article['publishedAt'] is String) {
-          article['publishedAt'] = article['publishedAt'].replaceAll('T', ' at ');
+          String originalString = article['publishedAt'];
+          int indexOfT = originalString.indexOf('T');
+
+          if (indexOfT != -1) {
+            // If 'T' is found, get the substring before 'T'
+            article['publishedAt'] = originalString.substring(0, indexOfT);
+          } else {
+            // 'T' not found in the string, keep the original string
+            article['publishedAt'] = originalString;
+          }
         }
+
         return article as Map<String, dynamic>;
       }).toList();
 
@@ -37,6 +55,7 @@ class NewsService extends NewsScreenTwo {
   }
 }
 
+//to build my own newsContainer
 class NewsContainer extends StatelessWidget {
 
   var _controller = Get.put(NewsController());
@@ -61,8 +80,11 @@ class NewsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
+      //when clicked on any newsContainer
       onTap: () {
+        //values passed to new Screen with Get Controller
         _controller.newsImageLink.value = urlToImage;
         _controller.newsContent.value = content;
         _controller.newsWebsiteLink.value = url;
@@ -71,6 +93,7 @@ class NewsContainer extends StatelessWidget {
           MaterialPageRoute(builder: (context) => DetailedNewsScreen()),
         );
       },
+      //Layout of the NewsContainer
       child: Container(
         padding: EdgeInsets.all(16),
         margin: EdgeInsets.all(8),
@@ -89,7 +112,10 @@ class NewsContainer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(urlToImage),
+            Image.network(
+              urlToImage,
+              fit: BoxFit.fitHeight,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 10.0, top: 10.0, bottom: 5.0),
               child: Row(
