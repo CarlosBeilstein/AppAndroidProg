@@ -4,6 +4,7 @@ import 'package:android_prog_app/screens/finance_screen.dart';
 import 'package:android_prog_app/screens/homescreen.dart';
 import 'package:android_prog_app/model/news_objects.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 //Screen displaying the parsed News
 class NewsScreenTwo extends StatefulWidget {
@@ -14,12 +15,11 @@ class NewsScreenTwo extends StatefulWidget {
 }
 
 class _NewsScreenState extends State<NewsScreenTwo> {
-
   //List that saves the news
   late List<Map<String, dynamic>> newsList = [];
 
   //In order not to load too much data onto the Screen at a time
-  int itemsPerPage = 15;
+  int itemsPerPage = 20;
   int currentPage = 0;
 
   //Search variables for Radio selection and Searchbar
@@ -50,8 +50,8 @@ class _NewsScreenState extends State<NewsScreenTwo> {
   //refetching changed data after changing search option (through radio or search bar)
   Future<void> refetchData() async {
     try {
-      var result =
-          await NewsService.fetchNews(selectedCountry!, selectedCategory!, searchedItem!);
+      var result = await NewsService.fetchNews(
+          selectedCountry!, selectedCategory!, searchedItem!);
       setState(() {
         newsList = result;
       });
@@ -59,7 +59,6 @@ class _NewsScreenState extends State<NewsScreenTwo> {
       print('Error refetching news data: $e');
     }
   }
-
 
   void loadMoreItems() {
     // Increment the current page and fetch more data
@@ -80,6 +79,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black38,
         title: Padding(
           padding: const EdgeInsets.only(right: 50),
           child: Center(child: Text("News")),
@@ -87,9 +87,10 @@ class _NewsScreenState extends State<NewsScreenTwo> {
       ),
       //Route through the 3 Pages with NavBar
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 1,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
             label: 'Home',
           ),
           BottomNavigationBarItem(
@@ -101,7 +102,6 @@ class _NewsScreenState extends State<NewsScreenTwo> {
             label: 'Finances',
           ),
         ],
-
         onTap: (index) {
           if (index == 0) {
             //Navigator.pop(context, true);
@@ -118,98 +118,21 @@ class _NewsScreenState extends State<NewsScreenTwo> {
       //Display of the newsContainer
       body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SingleChildScrollView(
-              //Displaying the Search Options (Radio and Searchbar)
-              child: Row(
+            //Displaying the Search Options (Radio and Searchbar)
+            Column(children: [
+              //Search bar
+              Row(
                 children: [
-                  //Radio to select which country to choose from
-                  Column(
-                    children: [
-                      const Text("Choose Country"),
-                      Radio<String>(
-                        value: 'us',
-                        groupValue: selectedCountry,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedCountry = value;
-                          });
-                          // logic to reload page
-                          refetchData();
-                        },
-                      ),
-                      const Text('USA'),
-                      Radio<String>(
-                        value: 'de',
-                        groupValue: selectedCountry,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedCountry = value;
-                          });
-                          refetchData();
-                        },
-                      ),
-                      const Text('German'),
-                    ],
-                  ),
-                  //Radio to select which Category to select
-                  Column(
-                    children: [
-                      const Text("Choose Category"),
-                      Radio<String>(
-                        value: 'general',
-                        groupValue: selectedCategory,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedCategory = value;
-                          });
-                          refetchData();
-                        },
-                      ),
-                      const Text('General'),
-                      Radio<String>(
-                        value: 'business',
-                        groupValue: selectedCategory,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedCategory = value;
-                          });
-                          refetchData();
-                        },
-                      ),
-                      const Text('Business'),
-                      Radio<String>(
-                        value: 'technology',
-                        groupValue: selectedCategory,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedCategory = value;
-                          });
-                          refetchData();
-                        },
-                      ),
-                      const Text('Technology'),
-                      Radio<String>(
-                        value: 'sports',
-                        groupValue: selectedCategory,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedCategory = value;
-                          });
-                          refetchData();
-                        },
-                      ),
-                      const Text('Sports'),
-                    ],
-                  ),
-                  //Searchbar
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Search...',
+                        decoration: const InputDecoration(
+                          hintText: 'Search for keywords...',
                           border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.search),
                         ),
                         onSubmitted: (query) {
                           searchedItem = query;
@@ -221,12 +144,119 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                   ),
                 ],
               ),
-            ),
+              // Choose Country Section
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Choose Country", style: GoogleFonts.lato(textStyle: const TextStyle(fontWeight: FontWeight.bold))),
+                    Row(
+                      children: [
+                        Radio<String>(
+                          value: 'us',
+                          groupValue: selectedCountry,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedCountry = value;
+                            });
+                          },
+                        ),
+                        Text('USA', style: GoogleFonts.lato()),
+                        Radio<String>(
+                          value: 'de',
+                          groupValue: selectedCountry,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedCountry = value;
+                            });
+                          },
+                        ),
+                        Text('Germany', style: GoogleFonts.lato()),
+                        Radio<String>(
+                          value: 'jp',
+                          groupValue: selectedCountry,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedCountry = value;
+                            });
+                          },
+                        ),
+                        Text('Japan', style: GoogleFonts.lato()),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              //Radio to select which Category to select
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Choose Category', style: GoogleFonts.lato(textStyle: const TextStyle(fontWeight: FontWeight.bold))),
+                    Row(
+                      children: [
+                        Radio<String>(
+                          value: 'general',
+                          groupValue: selectedCategory,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedCategory = value;
+                            });
+                            //refetchData();
+                          },
+                        ),
+                        Text('General', style: GoogleFonts.lato()),
+                        Radio<String>(
+                          value: 'business',
+                          groupValue: selectedCategory,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedCategory = value;
+                            });
+                            //refetchData();
+                          },
+                        ),
+                        Text('Business', style: GoogleFonts.lato()),
+                        Radio<String>(
+                          value: 'technology',
+                          groupValue: selectedCategory,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedCategory = value;
+                            });
+                            //refetchData();
+                          },
+                        ),
+                        Text('Tech', style: GoogleFonts.lato()),
+                        Radio<String>(
+                          value: 'sports',
+                          groupValue: selectedCategory,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedCategory = value;
+                            });
+                            //refetchData();
+                          },
+                        ),
+                        Text('Sports', style: GoogleFonts.lato()),
+                      ],
+                    ),
+                  ]
+                ),
+              ),
+            ]),
+
             // Display loading indicator if newsList is null
             if (newsList.isEmpty)
-              Padding(
+              const Padding(
                 padding: const EdgeInsets.all(18.0),
-                child: const Center(child: Text("No Search matches \nPlease look for a different topic", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)),
+                child: Center(
+                    child: Text(
+                  "No Search matches \nPlease look for a different topic",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                )),
               )
             else
               // Display news containers
@@ -247,7 +277,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
             // Button to load more or previous items
 
             //If the list is empty theres no reason to show the Buttons that load more or previous News
-            if(newsList.isNotEmpty)
+            if (newsList.isNotEmpty)
               Padding(
                 padding:
                     const EdgeInsets.only(top: 10.0, right: 18.0, left: 18.0),
@@ -256,7 +286,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                   child: Text('More'),
                 ),
               ),
-            if(newsList.isNotEmpty)
+            if (newsList.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: ElevatedButton(

@@ -11,12 +11,14 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black38,
         title: Padding(
           padding: const EdgeInsets.only(right: 50.0),
           child: Center(child: Text("Home")),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

@@ -14,7 +14,8 @@ class NewsService extends NewsScreenTwo {
     //API key used for website
     var apiKey = 'e1eedf371f2642df8eb2d1a0bffc197f';
     //parse following link if searchbar hasn't been used
-    var uri = Uri.parse('https://newsapi.org/v2/top-headlines?country=$country&category=$category&apiKey=$apiKey');
+    var uri = Uri.parse('');
+    //var uri = Uri.parse('https://newsapi.org/v2/top-headlines?country=$country&category=$category&apiKey=$apiKey');
     if(searchedItem.length > 0) {
       //use this link if searchbar has been used
       uri = Uri.parse('https://newsapi.org/v2/top-headlines?q=$searchedItem&country=$country&category=$category&apiKey=$apiKey');
@@ -53,6 +54,7 @@ class NewsService extends NewsScreenTwo {
       throw Exception('Request failed with status: ${response.statusCode}');
     }
   }
+
 }
 
 //to build my own newsContainer
@@ -137,11 +139,14 @@ class NewsContainer extends StatelessWidget {
             SizedBox(height: 8),
             Text(
               'Title: $title',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: GoogleFonts.playfairDisplay(
+                textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              )
             ),
             SizedBox(height: 8),
             Text(
               'Description: $description',
+              style: GoogleFonts.lato(),
             ),
           ],
         ),
