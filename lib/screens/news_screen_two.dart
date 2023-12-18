@@ -1,6 +1,6 @@
+import 'package:android_prog_app/screens/finance_screen_two.dart';
 import 'package:flutter/material.dart';
-import 'package:android_prog_app/screens/drawer.dart';
-import 'package:android_prog_app/screens/finance_screen.dart';
+import 'package:android_prog_app/model/drawer.dart';
 import 'package:android_prog_app/screens/homescreen.dart';
 import 'package:android_prog_app/model/news_objects.dart';
 import 'package:get/get.dart';
@@ -204,7 +204,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                             setState(() {
                               selectedCategory = value;
                             });
-                            //refetchData();
+                            refetchData();
                           },
                         ),
                         Text('General', style: GoogleFonts.lato()),
@@ -215,7 +215,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                             setState(() {
                               selectedCategory = value;
                             });
-                            //refetchData();
+                            refetchData();
                           },
                         ),
                         Text('Business', style: GoogleFonts.lato()),
@@ -226,7 +226,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                             setState(() {
                               selectedCategory = value;
                             });
-                            //refetchData();
+                            refetchData();
                           },
                         ),
                         Text('Tech', style: GoogleFonts.lato()),
@@ -237,7 +237,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                             setState(() {
                               selectedCategory = value;
                             });
-                            //refetchData();
+                            refetchData();
                           },
                         ),
                         Text('Sports', style: GoogleFonts.lato()),

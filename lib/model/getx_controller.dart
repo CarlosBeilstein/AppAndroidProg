@@ -18,3 +18,16 @@ class NewsController extends GetxController {
     change++;
   }
 }
+
+class FinanceController extends GetxController {
+
+  //values that the controller uses
+  var name = ''.obs;
+  var change = 0.obs;
+
+  //method to prevent mistakes -> any time controller is used smth happens
+  void changed(){
+    change++;
+  }
+
+}

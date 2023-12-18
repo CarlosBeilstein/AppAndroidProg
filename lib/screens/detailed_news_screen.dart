@@ -5,8 +5,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 import '../model/getx_controller.dart';
 
 class DetailedNewsScreen extends StatelessWidget {
-
-  NewsController _controller = Get.find();
+  NewsController _newsController = Get.find();
 
   DetailedNewsScreen({super.key});
 
@@ -17,7 +16,7 @@ class DetailedNewsScreen extends StatelessWidget {
         title: Text("News"),
       ),
       body: Obx( () {
-        _controller.changed();
+        _newsController.changed();
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -26,7 +25,7 @@ class DetailedNewsScreen extends StatelessWidget {
               height: 200, // Set an appropriate height for the image
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(_controller.newsImageLink.value),
+                  image: NetworkImage(_newsController.newsImageLink.value),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -36,7 +35,7 @@ class DetailedNewsScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                _controller.newsContent.value,
+                _newsController.newsContent.value,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -66,7 +65,7 @@ class DetailedNewsScreen extends StatelessWidget {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        launchUrlString(_controller.newsWebsiteLink.value);
+                        launchUrlString(_newsController.newsWebsiteLink.value);
                       },
                   ),
                 ),

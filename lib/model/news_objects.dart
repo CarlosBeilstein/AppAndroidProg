@@ -14,8 +14,7 @@ class NewsService extends NewsScreenTwo {
     //API key used for website
     var apiKey = 'e1eedf371f2642df8eb2d1a0bffc197f';
     //parse following link if searchbar hasn't been used
-    var uri = Uri.parse('');
-    //var uri = Uri.parse('https://newsapi.org/v2/top-headlines?country=$country&category=$category&apiKey=$apiKey');
+    var uri = Uri.parse('https://newsapi.org/v2/top-headlines?country=$country&category=$category&apiKey=$apiKey');
     if(searchedItem.length > 0) {
       //use this link if searchbar has been used
       uri = Uri.parse('https://newsapi.org/v2/top-headlines?q=$searchedItem&country=$country&category=$category&apiKey=$apiKey');
@@ -26,6 +25,7 @@ class NewsService extends NewsScreenTwo {
       var jsonResponse = convert.jsonDecode(response.body) as Map<String, dynamic>;
       List<dynamic> articles = jsonResponse['articles'];
 
+      // Bring every Listitem into a Map for easier use
       // Modify the parsing logic to add a line break after a comma in the text to prevent spillage over screenedges
       List<Map<String, dynamic>> parsedArticles = articles.map<Map<String, dynamic>>((article) {
         if (article['author'] is String && article['author'].contains(',')) {
@@ -60,7 +60,7 @@ class NewsService extends NewsScreenTwo {
 //to build my own newsContainer
 class NewsContainer extends StatelessWidget {
 
-  var _controller = Get.put(NewsController());
+  var _newsController = Get.put(NewsController());
 
   late String author;
   late String title;
@@ -87,9 +87,9 @@ class NewsContainer extends StatelessWidget {
       //when clicked on any newsContainer
       onTap: () {
         //values passed to new Screen with Get Controller
-        _controller.newsImageLink.value = urlToImage;
-        _controller.newsContent.value = content;
-        _controller.newsWebsiteLink.value = url;
+        _newsController.newsImageLink.value = urlToImage;
+        _newsController.newsContent.value = content;
+        _newsController.newsWebsiteLink.value = url;
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => DetailedNewsScreen()),

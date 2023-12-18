@@ -1,8 +1,7 @@
-import 'package:android_prog_app/screens/drawer.dart';
-import 'package:android_prog_app/screens/finance_screen.dart';
+import 'package:android_prog_app/model/drawer.dart';
+import 'package:android_prog_app/screens/finance_screen_two.dart';
 import 'package:android_prog_app/screens/news_screen_two.dart';
 import 'package:flutter/material.dart';
-
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
