@@ -80,10 +80,11 @@ class _NewsScreenState extends State<NewsScreenTwo> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black38,
+        backgroundColor: Colors.black,
+        iconTheme: IconThemeData(color: Colors.white),
         title: Padding(
           padding: const EdgeInsets.only(right: 50),
-          child: Center(child: Text("News")),
+          child: Text("News", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         ),
       ),
       //Route through the 3 Pages with NavBar
@@ -136,8 +137,10 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                         decoration: const InputDecoration(
                           hintText: 'Search for keywords...',
                           border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.search),
+                          prefixIcon: Icon(Icons.search, color: Colors.white),
+                          hintStyle: TextStyle(color: Colors.white),
                         ),
+                        style: TextStyle(color: Colors.white,),
                         onSubmitted: (query) {
                           searchedItem = query;
                           print(searchedItem?.length);
@@ -154,7 +157,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Choose Country", style: GoogleFonts.lato(textStyle: const TextStyle(fontWeight: FontWeight.bold))),
+                    Text("Choose Country", style: GoogleFonts.lato(textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
                     Row(
                       children: [
                         Radio<String>(
@@ -166,7 +169,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                             });
                           },
                         ),
-                        Text('USA', style: GoogleFonts.lato()),
+                        Text('USA', style: GoogleFonts.lato(textStyle: const TextStyle(color: Colors.white))),
                         Radio<String>(
                           value: 'de',
                           groupValue: selectedCountry,
@@ -176,7 +179,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                             });
                           },
                         ),
-                        Text('Germany', style: GoogleFonts.lato()),
+                        Text('Germany', style: GoogleFonts.lato(textStyle: const TextStyle(color: Colors.white))),
                         Radio<String>(
                           value: 'jp',
                           groupValue: selectedCountry,
@@ -186,7 +189,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                             });
                           },
                         ),
-                        Text('Japan', style: GoogleFonts.lato()),
+                        Text('Japan', style: GoogleFonts.lato(textStyle: const TextStyle(color: Colors.white))),
                       ],
                     ),
                   ],
@@ -198,7 +201,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Choose Category', style: GoogleFonts.lato(textStyle: const TextStyle(fontWeight: FontWeight.bold))),
+                    Text('Choose Category', style: GoogleFonts.lato(textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
                     Row(
                       children: [
                         Radio<String>(
@@ -211,7 +214,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                             refetchData();
                           },
                         ),
-                        Text('General', style: GoogleFonts.lato()),
+                        Text('General', style: GoogleFonts.lato(textStyle: const TextStyle(color: Colors.white))),
                         Radio<String>(
                           value: 'business',
                           groupValue: selectedCategory,
@@ -222,7 +225,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                             refetchData();
                           },
                         ),
-                        Text('Business', style: GoogleFonts.lato()),
+                        Text('Business', style: GoogleFonts.lato(textStyle: const TextStyle(color: Colors.white))),
                         Radio<String>(
                           value: 'technology',
                           groupValue: selectedCategory,
@@ -233,7 +236,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                             refetchData();
                           },
                         ),
-                        Text('Tech', style: GoogleFonts.lato()),
+                        Text('Tech', style: GoogleFonts.lato(textStyle: const TextStyle(color: Colors.white))),
                         Radio<String>(
                           value: 'sports',
                           groupValue: selectedCategory,
@@ -244,7 +247,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                             refetchData();
                           },
                         ),
-                        Text('Sports', style: GoogleFonts.lato()),
+                        Text('Sports', style: GoogleFonts.lato(textStyle: const TextStyle(color: Colors.white))),
                       ],
                     ),
                   ]
@@ -259,7 +262,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
                 child: Center(
                     child: Text(
                   "No Search matches \nPlease look for a different topic",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
                 )),
               )
             else

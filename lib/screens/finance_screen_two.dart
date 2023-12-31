@@ -1,4 +1,5 @@
 import 'package:android_prog_app/model/finance_object.dart';
+import 'package:android_prog_app/screens/favorite_stocks.dart';
 import 'package:android_prog_app/screens/homescreen.dart';
 import 'package:android_prog_app/screens/news_screen_two.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class FinanceScreen extends StatefulWidget {
 }
 
 class _FinanceScreenState extends State<FinanceScreen> {
+
   Stock? financeStock;
 
   @override
@@ -21,9 +23,9 @@ class _FinanceScreenState extends State<FinanceScreen> {
     //fetchFinances();
   }
 
-  Future<void> fetchFinances() async {
+  Future<void> fetchFinances(String stockSymbol) async {
     try {
-      var result = await FinanceService.fetchFinances();
+      var result = await FinanceService.fetchFinances(stockSymbol);
       setState(() {
         financeStock = result;
       });
@@ -39,6 +41,7 @@ class _FinanceScreenState extends State<FinanceScreen> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black38,
+        iconTheme: IconThemeData(color: Colors.white),
         title: Text("Finances", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -83,14 +86,14 @@ class _FinanceScreenState extends State<FinanceScreen> {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 decoration: const InputDecoration(
-                  hintText: 'Search for keywords...',
+                  hintText: 'Search for Stocksymbols ...',
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.search, color: Colors.white,),
                   hintStyle: TextStyle(color: Colors.white),
                 ),
                 style: TextStyle(color: Colors.white),
                 onSubmitted: (query) {
-                  fetchFinances();
+                  fetchFinances(query);
                 },
               ),
             ),
@@ -102,6 +105,14 @@ class _FinanceScreenState extends State<FinanceScreen> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: goToFavorites, child: Icon(Icons.favorite, color: Colors.black), backgroundColor: Colors.white,),
+    );
+  }
+
+  void goToFavorites() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FavoriteStocks()),
     );
   }
 }

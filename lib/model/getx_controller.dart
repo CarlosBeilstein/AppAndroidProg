@@ -25,6 +25,7 @@ class FinanceController extends GetxController {
   var name = ''.obs;
   var value = ''.obs;
   var change = 0.obs;
+  var favoritesList = [].obs;
 
   //method to prevent mistakes -> any time controller is used smth happens
   void changed(){
