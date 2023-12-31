@@ -28,14 +28,17 @@ class FinanceService extends FinanceScreen {
 
           if (firstObject is Map<String, dynamic>) {
             String companyName = firstObject['companyName'];
-            if(companyName.length >= 20) companyName = stockSymbol;
+            String companySymbol = companyName;
+            if(companyName.length >= 20) companySymbol = stockSymbol;
             double price = firstObject['latestPrice'];
             double change = firstObject['change'];
             double changePercent = firstObject['changePercent'].toDouble();
 
             return Stock(
-              name: companyName,
+              name: companySymbol,
+              companyName: companyName,
               price: price,
+              added: false,
               priceMovement: PriceMovement(
                 value: change,
                 percentage: changePercent * 100,
@@ -43,7 +46,7 @@ class FinanceService extends FinanceScreen {
               ),
             );
           } else {
-            return Stock(name: 'Unknown Stock Symbol', price: 0, priceMovement: PriceMovement(value: 0, percentage: 0, movement: 'Down'));
+            return Stock(name: 'Unknown Stock Symbol', companyName: '', added: false, price: 0, priceMovement: PriceMovement(value: 0, percentage: 0, movement: 'Down'));
             throw Exception('Invalid JSON format inside the array');
           }
         } else {
@@ -60,7 +63,7 @@ class FinanceService extends FinanceScreen {
 }
 
 class StockContainer extends StatelessWidget {
-  var _financeController = Get.put(FinanceController());
+  FinanceController _financeController = Get.find();
 
   final Stock stock;
 
@@ -70,11 +73,14 @@ class StockContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color movementColor =
-        stock.priceMovement.movement == "Down" ? Colors.red : Colors.green;
+    Color movementColor = stock.priceMovement.movement == "Down" ? Colors.red : Colors.green;
     return GestureDetector(
       onTap: () {
-        _financeController.name.value = stock.name;
+        if(_financeController.companyName.value.length <= 30) {
+          _financeController.companyName.value = stock.companyName;
+        } else {
+          _financeController.companyName.value = stock.companyName.substring(0, 30);
+        }
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => DetailedFinanceScreen()),
@@ -140,10 +146,7 @@ class StockContainer extends StatelessWidget {
                     ),
                     child: Align(
                       alignment: Alignment.center,
-                      child: Icon(
-                        Icons.favorite_border,
-                        color: Colors.black,
-                      ),
+                      child: Icon(Icons.favorite, color: Colors.black,),
                     ),
                   ),
                 ),
@@ -153,10 +156,16 @@ class StockContainer extends StatelessWidget {
         ),
       ),
     );
-
   }
 
   void addToWatchList() {
+
+    if(stock.added == false) {
+      stock.added = true;
+    } else {
+      stock.added = false;
+    }
+
     for(int i = 0; i < _financeController.favoritesList.length; i++) {
       if(_financeController.favoritesList[i].name == stock.name) {
         print('already in list');
@@ -171,13 +180,17 @@ class StockContainer extends StatelessWidget {
 
 class Stock {
   late String name;
+  late String companyName;
   late double price;
   late PriceMovement priceMovement;
+  late bool added = false;
 
   Stock({
     required this.name,
+    required this.companyName,
     required this.price,
     required this.priceMovement,
+    required this.added,
   });
 }
 

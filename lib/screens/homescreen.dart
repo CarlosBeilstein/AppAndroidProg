@@ -1,10 +1,14 @@
 import 'package:android_prog_app/model/drawer.dart';
+import 'package:android_prog_app/model/getx_controller.dart';
 import 'package:android_prog_app/screens/finance_screen_two.dart';
 import 'package:android_prog_app/screens/news_screen_two.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  var _financeController = Get.put(FinanceController());
 
   @override
   Widget build(BuildContext context) {

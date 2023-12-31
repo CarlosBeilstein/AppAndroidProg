@@ -28,70 +28,68 @@ class _FavoriteStocksState extends State<FavoriteStocks> {
       drawer: MyDrawer(),
       body: Container(
         padding: EdgeInsets.all(8.0),
-        child: ListView.builder(
-          itemCount: _financeController.favoritesList.length,
-          itemBuilder: (context, index) {
-            Stock favoriteStock = _financeController.favoritesList[index];
-            Color movementColor = _financeController.favoritesList[index].priceMovement.movement == "Down" ? Colors.red : Colors.green;
-            return Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 15, bottom: 15),
-                  child: Text(
-                    _financeController.favoritesList[index].name,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+        child: _financeController.favoritesList != null ? ListView.builder(
+                itemCount: _financeController.favoritesList.length,
+                itemBuilder: (context, index) {
+                  Stock favoriteStock = _financeController.favoritesList[index];
+                  Color movementColor =
+                      favoriteStock.priceMovement.movement == "Down" ? Colors.red : Colors.green;
+                  return Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, top: 15, bottom: 15),
+                        child: Text(
+                          favoriteStock.name,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 15, bottom: 15, right: 30),
+                        child: Text(
+                          favoriteStock.price.toString(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15, bottom: 15),
+                        child: Text(
+                          "${favoriteStock.priceMovement.value}",
+                          style: TextStyle(
+                            color: movementColor,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 4),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 15, bottom: 15, right: 20),
+                        child: Text(
+                          "${favoriteStock.priceMovement.percentage}%",
+                          style: TextStyle(
+                            color: movementColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ) : Center(
+                child: Text(
+                  'Favorites list is null',
+                  style: TextStyle(color: Colors.white),
                 ),
-                Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(top: 15, bottom: 15, right: 30),
-                  child: Text(
-                    _financeController.favoritesList[index].price.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(width: 8),
-                Padding(
-                  padding: const EdgeInsets.only(top: 15, bottom: 15),
-                  child: Text(
-                    "${_financeController.favoritesList[index].priceMovement.value}",
-                    style: TextStyle(
-                      color: movementColor,
-                    ),
-                  ),
-                ),
-                SizedBox(width: 4),
-                Padding(
-                  padding: const EdgeInsets.only(top: 15, bottom: 15, right: 20),
-                  child: Text(
-                    "${_financeController.favoritesList[index].priceMovement.percentage}%",
-                    style: TextStyle(
-                      color: movementColor,
-                    ),
-                  ),
-                ),
-              ]
-
-              /*
-              title: Text(
-                favoriteStock.name,
-                style: TextStyle(color: Colors.white),
               ),
-
-               */
-
-              // Add additional properties or actions for each favorite stock
-            );
-          },
-        ),
       ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: pageBack,
         child: Icon(

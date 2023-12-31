@@ -1,3 +1,4 @@
+import 'package:android_prog_app/model/finance_object.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -23,6 +24,7 @@ class FinanceController extends GetxController {
 
   //values that the controller uses
   var name = ''.obs;
+  var companyName = ''.obs;
   var value = ''.obs;
   var change = 0.obs;
   var favoritesList = [].obs;

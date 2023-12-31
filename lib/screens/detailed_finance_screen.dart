@@ -10,8 +10,10 @@ class DetailedFinanceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text(_financeController.name.value),
+        backgroundColor: Colors.black,
+        title: Text(_financeController.companyName.value, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
       ),
       body: Obx( () {
         _financeController.changed();

@@ -1,8 +1,10 @@
 import 'package:android_prog_app/model/finance_object.dart';
+import 'package:android_prog_app/model/getx_controller.dart';
 import 'package:android_prog_app/screens/favorite_stocks.dart';
 import 'package:android_prog_app/screens/homescreen.dart';
 import 'package:android_prog_app/screens/news_screen_two.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../model/drawer.dart';
 
@@ -14,6 +16,7 @@ class FinanceScreen extends StatefulWidget {
 }
 
 class _FinanceScreenState extends State<FinanceScreen> {
+  FinanceController _financeController = Get.find();
 
   Stock? financeStock;
 
@@ -42,7 +45,8 @@ class _FinanceScreenState extends State<FinanceScreen> {
       appBar: AppBar(
         backgroundColor: Colors.black38,
         iconTheme: IconThemeData(color: Colors.white),
-        title: Text("Finances", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        title: Text("Finances",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
@@ -88,7 +92,10 @@ class _FinanceScreenState extends State<FinanceScreen> {
                 decoration: const InputDecoration(
                   hintText: 'Search for Stocksymbols ...',
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.search, color: Colors.white,),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
                   hintStyle: TextStyle(color: Colors.white),
                 ),
                 style: TextStyle(color: Colors.white),
@@ -99,13 +106,17 @@ class _FinanceScreenState extends State<FinanceScreen> {
             ),
             financeStock != null
                 ? StockContainer(
-              stock: financeStock!,
-            )
+                    stock: financeStock!,
+                  )
                 : Container(),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: goToFavorites, child: Icon(Icons.favorite, color: Colors.black), backgroundColor: Colors.white,),
+      floatingActionButton: FloatingActionButton(
+        onPressed: goToFavorites,
+        child: Icon(Icons.favorite),
+        backgroundColor: Colors.white,
+      ),
     );
   }
 

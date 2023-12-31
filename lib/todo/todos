@@ -1,0 +1,10 @@
+
+My Favorites in Backend
+
+my SQL Workbench
+    datenbank erstellen
+        Tabelle f[r favorites
+    Import mySQL ... package
+    (Passwort (Workbench) und IP (Rechner))
+    bei Appstart drauf zugreifen mit SQL statement
+    Bei Fav hinzufuegen auch ein SQL Statement um in tabelle einzufuegen
