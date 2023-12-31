@@ -78,6 +78,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black38,
         title: Padding(
@@ -87,6 +88,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
       ),
       //Route through the 3 Pages with NavBar
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.black,
         currentIndex: 1,
         items: [
           BottomNavigationBarItem(
@@ -102,6 +104,8 @@ class _NewsScreenState extends State<NewsScreenTwo> {
             label: 'Finances',
           ),
         ],
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white,
         onTap: (index) {
           if (index == 0) {
             //Navigator.pop(context, true);

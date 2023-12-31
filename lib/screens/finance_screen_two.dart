@@ -6,62 +6,43 @@ import 'package:flutter/material.dart';
 import '../model/drawer.dart';
 
 class FinanceScreen extends StatefulWidget {
-  const FinanceScreen({super.key});
+  const FinanceScreen({Key? key}) : super(key: key);
 
   @override
   State<FinanceScreen> createState() => _FinanceScreenState();
 }
 
 class _FinanceScreenState extends State<FinanceScreen> {
-  late List<Map<String, dynamic>> financeList = [];
-
-  String? trend = 'indexes';
-  String? index_market = 'americas';
+  Stock? financeStock;
 
   @override
   void initState() {
     super.initState();
-    fetchFinances(trend!, index_market!);
+    //fetchFinances();
   }
 
-  Future<void> fetchFinances(String trend, String index_market) async {
+  Future<void> fetchFinances() async {
     try {
-      var result = await FinanceService.fetchFinances(trend, index_market);
+      var result = await FinanceService.fetchFinances();
       setState(() {
-        // Append the new data to the existing list
-        financeList.addAll(result);
+        financeStock = result;
       });
     } catch (e, stackTrace) {
-      print('Error fetching news data: $e');
+      print('Error fetching finance data: $e');
       print('Stacktrace $stackTrace');
     }
-  }
-
-  Future<void> reFetchFinances() async {
-    try {
-      var result = await FinanceService.fetchFinances(trend!, index_market!);
-      setState(() {
-        financeList.addAll(result);
-      });
-    } catch (e) {
-      print('Du bist zu dumm um es richtig hinzubekommmen! Problem: $e');
-    }
-  }
-
-  void loadStocks() {
-    reFetchFinances();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-          backgroundColor: Colors.black38,
-          title: Padding(
-            padding: const EdgeInsets.only(right: 50),
-            child: Center(child: Text("Finances")),
-          )),
+        backgroundColor: Colors.black38,
+        title: Text("Finances", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.black,
         currentIndex: 2,
         items: [
           BottomNavigationBarItem(
@@ -77,15 +58,19 @@ class _FinanceScreenState extends State<FinanceScreen> {
             label: 'Finances',
           ),
         ],
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white,
         onTap: (index) {
           if (index == 0) {
-            //Navigator.pop(context, true);
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomeScreen()));
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
           } else if (index == 1) {
-            //Navigator.pop(context, true);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => NewsScreenTwo()));
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => NewsScreenTwo()),
+            );
           }
         },
       ),
@@ -94,31 +79,26 @@ class _FinanceScreenState extends State<FinanceScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(onPressed: loadStocks, child: Text("Hole Aktien")),
-
-            if (financeList.isEmpty)
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Center(
-                  child: Text(
-                    'Finance list is empty',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  )),
-              )
-            else
-              ...financeList
-                  .take(10)
-                  .map((finances) => StockContainer(
-                name: finances['name'],
-                price: finances['price'],
-                priceMovement: PriceMovement(
-                  percentage: finances['price_movement']['percentage'],
-                  value: finances['price_movement']['value'],
-                  movement: finances['price_movement']['movement'],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                decoration: const InputDecoration(
+                  hintText: 'Search for keywords...',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.search, color: Colors.white,),
+                  hintStyle: TextStyle(color: Colors.white),
                 ),
-                stocks: finances['stocks'],
-              ))
-
+                style: TextStyle(color: Colors.white),
+                onSubmitted: (query) {
+                  fetchFinances();
+                },
+              ),
+            ),
+            financeStock != null
+                ? StockContainer(
+              stock: financeStock!,
+            )
+                : Container(),
           ],
         ),
       ),
