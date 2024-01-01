@@ -29,7 +29,7 @@ class FinanceService extends FinanceScreen {
           if (firstObject is Map<String, dynamic>) {
             String companyName = firstObject['companyName'];
             String companySymbol = companyName;
-            if(companyName.length >= 20) companySymbol = stockSymbol;
+            if(companyName.length >= 15) companySymbol = stockSymbol.toUpperCase();
             double price = firstObject['latestPrice'];
             double change = firstObject['change'];
             double changePercent = firstObject['changePercent'].toDouble();
@@ -86,74 +86,103 @@ class StockContainer extends StatelessWidget {
           MaterialPageRoute(builder: (context) => DetailedFinanceScreen()),
         );
       },
-      child: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
+      child: Column(
+        children: [
+          Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 20, top: 15, bottom: 15),
-                child: Text(
-                  stock.name,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                padding: const EdgeInsets.only(left: 15),
+                child: Text("Name", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
               ),
               Spacer(),
+              Text("Last sold Price", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+              Spacer(),
               Padding(
-                padding: const EdgeInsets.only(top: 15, bottom: 15, right: 30),
-                child: Text(
-                  stock.price.toString(),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(width: 8),
-              Padding(
-                padding: const EdgeInsets.only(top: 15, bottom: 15),
-                child: Text(
-                  "${stock.priceMovement.value}",
-                  style: TextStyle(
-                    color: movementColor,
-                  ),
-                ),
-              ),
-              SizedBox(width: 4),
-              Padding(
-                padding: const EdgeInsets.only(top: 15, bottom: 15, right: 20),
-                child: Text(
-                  "${stock.priceMovement.percentage}%",
-                  style: TextStyle(
-                    color: movementColor,
-                  ),
-                ),
-              ),
-              Container(
-                width: 40,
-                child: Center(
-                  child: ElevatedButton(
-                    onPressed: addToWatchList,
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        // Adjust the border radius as needed
-                      ),
-                    ),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Icon(Icons.favorite, color: Colors.black,),
-                    ),
-                  ),
-                ),
+                padding: const EdgeInsets.only(right: 15),
+                child: Text("Add to Fav", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
               ),
             ],
           ),
-        ),
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.white)
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20, top: 15, bottom: 15),
+                      child: Text(
+                        stock.name,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15, bottom: 15, right: 30),
+                      child: Text(
+                        stock.price.toString(),
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15, bottom: 15, right: 10),
+                      child: Text(
+                        "${stock.priceMovement.value}",
+                        style: TextStyle(
+                          color: movementColor,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15, bottom: 15, right: 20),
+                      child: Text(
+                        "${stock.priceMovement.percentage}%",
+                        style: TextStyle(
+                          color: movementColor,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Container(
+                        width: 40,
+                        child: Center(
+                          child: ElevatedButton(
+                            onPressed: addToWatchList,
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                // Adjust the border radius as needed
+                              ),
+                            ),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Icon(Icons.favorite, color: Colors.black,),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -173,6 +202,7 @@ class StockContainer extends StatelessWidget {
       }
     }
 
+    if(stock.name == 'Unknown Stock Symbol') return;
     _financeController.favoritesList.add(stock);
     print('added: ' + _financeController.favoritesList[_financeController.favoritesList.length - 1].name + ' to favs');
   }

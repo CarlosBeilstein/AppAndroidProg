@@ -13,14 +13,17 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black38,
+        backgroundColor: Colors.black,
+        iconTheme: IconThemeData(color: Colors.white),
         title: Padding(
           padding: const EdgeInsets.only(right: 50.0),
-          child: Center(child: Text("Home")),
+          child: Center(child: Text("Home", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.black,
         currentIndex: 0,
         items: [
           BottomNavigationBarItem(
@@ -36,6 +39,8 @@ class HomeScreen extends StatelessWidget {
             label: 'Finances',
           ),
         ],
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white,
         onTap: (index) {
           if(index == 1) {
             //Navigator.pop(context, true);
@@ -58,7 +63,6 @@ class HomeScreen extends StatelessWidget {
 
         ],
       ),
-      floatingActionButton: MyFloatingActionButton(),
     );
   }
 }

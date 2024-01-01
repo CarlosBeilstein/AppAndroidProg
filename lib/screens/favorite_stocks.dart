@@ -1,4 +1,5 @@
 import 'package:android_prog_app/model/drawer.dart';
+import 'package:android_prog_app/screens/detailed_finance_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:android_prog_app/model/finance_object.dart';
 import 'package:get/get.dart';
@@ -34,53 +35,67 @@ class _FavoriteStocksState extends State<FavoriteStocks> {
                   Stock favoriteStock = _financeController.favoritesList[index];
                   Color movementColor =
                       favoriteStock.priceMovement.movement == "Down" ? Colors.red : Colors.green;
-                  return Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, top: 15, bottom: 15),
-                        child: Text(
-                          favoriteStock.name,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DetailedFinanceScreen()),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.white),
                       ),
-                      Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 15, bottom: 15, right: 30),
-                        child: Text(
-                          favoriteStock.price.toString(),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, top: 15, bottom: 15),
+                            child: Text(
+                              favoriteStock.name,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15, bottom: 15),
-                        child: Text(
-                          "${favoriteStock.priceMovement.value}",
-                          style: TextStyle(
-                            color: movementColor,
+                          Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 15, bottom: 15, right: 30),
+                            child: Text(
+                              favoriteStock.price.toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(width: 4),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 15, bottom: 15, right: 20),
-                        child: Text(
-                          "${favoriteStock.priceMovement.percentage}%",
-                          style: TextStyle(
-                            color: movementColor,
+                          SizedBox(width: 8),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15, bottom: 15),
+                            child: Text(
+                              "${favoriteStock.priceMovement.value}",
+                              style: TextStyle(
+                                color: movementColor,
+                              ),
+                            ),
                           ),
-                        ),
+                          SizedBox(width: 4),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 15, bottom: 15, right: 20),
+                            child: Text(
+                              "${favoriteStock.priceMovement.percentage}%",
+                              style: TextStyle(
+                                color: movementColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   );
                 },
               ) : Center(

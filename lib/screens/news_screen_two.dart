@@ -23,7 +23,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
   int currentPage = 0;
 
   //Search variables for Radio selection and Searchbar
-  String? selectedCountry = 'de';
+  String? selectedCountry = 'us';
   String? selectedCategory = 'general';
   String? searchedItem = '';
 
