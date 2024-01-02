@@ -1,3 +1,4 @@
+import 'package:android_prog_app/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -5,32 +6,31 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
+    return const Drawer(
 
       child: Column(
-        children: [
-          Container(
-            child: Text("Test"),
-          ),
-          Container(
-            child: Text("Test2"),
-          )
-        ],
+        children: [],
       ),
     );
   }
 }
 
-class MyFloatingActionButton extends StatelessWidget {
-  const MyFloatingActionButton({super.key});
+class ProfileFloatingButton extends StatelessWidget {
+  const ProfileFloatingButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      child: Icon(Icons.add),
-      onPressed: () => {
+    return FloatingActionButton.small(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ProfileScreen()),
+        );
+      },
 
-      }
+      backgroundColor: Colors.blue,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+      child: const Icon(Icons.person, color: Colors.white, size: 16),
     );
   }
 }

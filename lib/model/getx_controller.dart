@@ -1,7 +1,4 @@
-import 'package:android_prog_app/model/finance_object.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
 
 //Controller that helps to move towards the detailed NewsScreen
 class NewsController extends GetxController {

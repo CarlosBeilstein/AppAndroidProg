@@ -11,8 +11,8 @@ class NewsService extends NewsScreenTwo {
 
   //Method to prase Data from NewsAPI
   static Future<List<Map<String, dynamic>>> fetchNews(String country, String category, String searchedItem) async {
-    //API key used for website
-    var apiKey = 'e1eedf371f2642df8eb2d1a0bffc197f';
+    //API key used for website (f at the very end after 197 to complete key)
+    var apiKey = 'e1eedf371f2642df8eb2d1a0bffc197';
     //parse following link if searchbar hasn't been used
     var uri = Uri.parse('https://newsapi.org/v2/top-headlines?country=$country&category=$category&apiKey=$apiKey');
     if(searchedItem.length > 0) {

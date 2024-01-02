@@ -5,7 +5,7 @@ import 'package:android_prog_app/screens/homescreen.dart';
 import 'package:android_prog_app/screens/news_screen_two.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../model/backend_connector.dart';
 import '../model/drawer.dart';
 
 class FinanceScreen extends StatefulWidget {
@@ -40,6 +40,7 @@ class _FinanceScreenState extends State<FinanceScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -114,8 +115,9 @@ class _FinanceScreenState extends State<FinanceScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: goToFavorites,
-        child: Icon(Icons.favorite, color: Colors.black,),
         backgroundColor: Colors.white,
+        child: Icon(Icons.favorite, color: Colors.black,),
+
       ),
     );
   }

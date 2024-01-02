@@ -57,6 +57,8 @@ class HomeScreen extends StatelessWidget {
           }
         },
       ),
+      floatingActionButton: ProfileFloatingButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       drawer: MyDrawer(),
       body: Column(
         children: [

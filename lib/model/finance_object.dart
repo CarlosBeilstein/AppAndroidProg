@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:android_prog_app/model/getx_controller.dart';
 import 'package:android_prog_app/screens/detailed_finance_screen.dart';
 import 'package:android_prog_app/screens/finance_screen_two.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -29,7 +28,7 @@ class FinanceService extends FinanceScreen {
           if (firstObject is Map<String, dynamic>) {
             String companyName = firstObject['companyName'];
             String companySymbol = companyName;
-            if(companyName.length >= 15) companySymbol = stockSymbol.toUpperCase();
+            if(companyName.length >= 10) companySymbol = stockSymbol.toUpperCase();
             double price = firstObject['latestPrice'];
             double change = firstObject['change'];
             double changePercent = firstObject['changePercent'].toDouble();
@@ -47,7 +46,6 @@ class FinanceService extends FinanceScreen {
             );
           } else {
             return Stock(name: 'Unknown Stock Symbol', companyName: '', added: false, price: 0, priceMovement: PriceMovement(value: 0, percentage: 0, movement: 'Down'));
-            throw Exception('Invalid JSON format inside the array');
           }
         } else {
           throw Exception('Invalid JSON format or empty array response');
