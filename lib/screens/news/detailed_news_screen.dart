@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import '../model/getx_controller.dart';
+import '../../model/getx_controller.dart';
 
 class DetailedNewsScreen extends StatelessWidget {
   NewsController _newsController = Get.find();

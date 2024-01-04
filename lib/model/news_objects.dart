@@ -1,11 +1,12 @@
 import 'package:android_prog_app/model/getx_controller.dart';
-import 'package:android_prog_app/screens/detailed_news_screen.dart';
-import 'package:android_prog_app/screens/news_screen_two.dart';
+import 'package:android_prog_app/screens/news/detailed_news_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
+
+import '../screens/news/news_screen_two.dart';
 
 class NewsService extends NewsScreenTwo {
 

@@ -1,12 +1,14 @@
+import 'dart:convert';
+
 import 'package:android_prog_app/model/finance_object.dart';
 import 'package:android_prog_app/model/getx_controller.dart';
-import 'package:android_prog_app/screens/favorite_stocks.dart';
+import 'package:android_prog_app/screens/news/news_screen_two.dart';
+import 'package:android_prog_app/screens/stocks/favorite_stocks.dart';
 import 'package:android_prog_app/screens/homescreen.dart';
-import 'package:android_prog_app/screens/news_screen_two.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../model/backend_connector.dart';
-import '../model/drawer.dart';
+import 'package:http/http.dart' as http;
+import '../../model/drawer.dart';
 
 class FinanceScreen extends StatefulWidget {
   const FinanceScreen({Key? key}) : super(key: key);
@@ -35,6 +37,39 @@ class _FinanceScreenState extends State<FinanceScreen> {
     } catch (e, stackTrace) {
       print('Error fetching finance data: $e');
       print('Stacktrace $stackTrace');
+    }
+  }
+
+  Future<void> fetchDataFromApi() async {
+    if(!_financeController.called.value) {
+      print("PIMMEL");
+      _financeController.called.value = true;
+      String host = 'localhost:8000';
+      String path = '/api/FavStocks/';
+
+      var uri = Uri.http(host, path);
+
+      final response = await http.get(uri);
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+
+        List<Stock> stockList = [];
+
+        for (var stockData in data) {
+          Stock stock = Stock.fromJson(stockData);
+          stockList.add(stock);
+
+          bool stockExists = _financeController.favoritesList.any((existingStock) => existingStock.companyName == stock.companyName);
+
+          if(!stockExists) _financeController.favoritesList.add(stock);
+        }
+
+
+        print('Fetched data: $data');
+      } else {
+        print('Failed to fetch data. Status code: ${response.statusCode}');
+      }
     }
   }
 
@@ -122,7 +157,11 @@ class _FinanceScreenState extends State<FinanceScreen> {
     );
   }
 
-  void goToFavorites() {
+
+
+
+  void goToFavorites() async {
+    await fetchDataFromApi();
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => FavoriteStocks()),

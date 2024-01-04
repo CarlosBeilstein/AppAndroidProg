@@ -1,4 +1,4 @@
-import 'package:android_prog_app/screens/finance_screen_two.dart';
+import 'package:android_prog_app/screens/stocks/finance_screen_two.dart';
 import 'package:flutter/material.dart';
 import 'package:android_prog_app/model/drawer.dart';
 import 'package:android_prog_app/screens/homescreen.dart';
