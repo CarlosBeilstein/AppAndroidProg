@@ -12,4 +12,4 @@ List My Favorites in Backend
         Bei Fav hinzufuegen auch ein SQL Statement um in tabelle einzufuegen (INSERT INTO `appdb`.`stockfavs` (`id`, `companyname`, `price`, `change`, `changepercent`) VALUES ('5', 'LOL', '23', '2', '2.1');)
             -> either adding or removing from fav lists (also loop to know whether its already added (elevated button Icon))
 
-
+UPDATE

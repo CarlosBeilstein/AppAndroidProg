@@ -41,35 +41,39 @@ class _FinanceScreenState extends State<FinanceScreen> {
   }
 
   Future<void> fetchDataFromApi() async {
-    if(!_financeController.called.value) {
-      print("PIMMEL");
-      _financeController.called.value = true;
-      String host = 'localhost:8000';
-      String path = '/api/FavStocks/';
+    try {
+      if (!_financeController.called.value) {
+        _financeController.called.value = true;
+        String host = 'localhost:8000';
+        String path = '/api/FavStocks/';
 
-      var uri = Uri.http(host, path);
+        var uri = Uri.http(host, path);
 
-      final response = await http.get(uri);
+        final response = await http.get(uri);
 
-      if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
+        if (response.statusCode == 200) {
+          final List<dynamic> data = jsonDecode(response.body);
 
-        List<Stock> stockList = [];
+          List<Stock> stockList = [];
 
-        for (var stockData in data) {
-          Stock stock = Stock.fromJson(stockData);
-          stockList.add(stock);
+          for (var stockData in data) {
+            Stock stock = Stock.fromJson(stockData);
+            stockList.add(stock);
 
-          bool stockExists = _financeController.favoritesList.any((existingStock) => existingStock.companyName == stock.companyName);
+            bool stockExists = _financeController.favoritesList.any(
+                (existingStock) =>
+                    existingStock.companyName == stock.companyName);
 
-          if(!stockExists) _financeController.favoritesList.add(stock);
+            if (!stockExists) _financeController.favoritesList.add(stock);
+          }
+
+          print('Fetched data: $data');
+        } else {
+          print('Failed to fetch data. Status code: ${response.statusCode}');
         }
-
-
-        print('Fetched data: $data');
-      } else {
-        print('Failed to fetch data. Status code: ${response.statusCode}');
       }
+    } catch (error) {
+      throw Exception('Server has probably not been started yet: $error');
     }
   }
 
@@ -156,9 +160,6 @@ class _FinanceScreenState extends State<FinanceScreen> {
       ),
     );
   }
-
-
-
 
   void goToFavorites() async {
     await fetchDataFromApi();

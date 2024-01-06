@@ -219,6 +219,8 @@ class StockContainer extends StatelessWidget {
   }
 
   void addToWatchList() {
+    // to remember whether the backend call has been done or not so the
+    // list wont build multiple times
     _financeController.called.value = false;
 
     if (stock.added == false) {
@@ -272,7 +274,7 @@ class StockContainer extends StatelessWidget {
         throw Exception('Daten wurden nicht gesendet. Status code: ${response.statusCode}');
       }
     } catch (error) {
-      throw Exception('Fehler beim senden der Daten: ${error}');
+      throw Exception('Fehler beim senden der Daten: $error');
     }
   }
 }
