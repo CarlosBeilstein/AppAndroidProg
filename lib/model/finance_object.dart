@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 class FinanceService extends FinanceScreen {
   static Future<Stock?> fetchFinances(String stockSymbol) async {
     try {
-      var apiKey = 'pk_3adfacdee30c4a909c0be1dcb6e9c8d8';
+      var apiKey = 'sk_7b9182ea04824f24b2518ddad1a94ddf';
       var url = 'https://api.iex.cloud/v1/data/core/quote/MSFT?token=$apiKey';
       if (stockSymbol.length > 0) {
         url =
@@ -29,18 +29,10 @@ class FinanceService extends FinanceScreen {
           if (firstObject is Map<String, dynamic>) {
             String companyName = firstObject['companyName'];
             String companySymbol = companyName;
-            if (companyName.length >= 10)
-              companySymbol = stockSymbol.toUpperCase();
+            if (companyName.length >= 10) companySymbol = stockSymbol.toUpperCase();
             double price = firstObject['latestPrice'];
             double change = firstObject['change'];
-            //double changePer = firstObject['changePercentage'].toDouble();
-            //changePer.toStringAsFixed(3);
-            //print(changePer);
-            double changePercent = firstObject['changePercent'].toDouble();
-            String changePer = changePercent.toStringAsFixed(3);
-            changePer = changePer.replaceAll(RegExp(r'(\.0+|(?<=\.\d)0+)$'), '');
-            double lastChangePercent = double.parse(changePer);
-
+            //double changePercent = firstObject['changePercent'].toDouble();
 
             return Stock(
               name: companySymbol,
@@ -79,7 +71,10 @@ class StockContainer extends StatelessWidget {
   FinanceController _financeController = Get.find();
 
   final Stock stock;
+  //ServerCall
   String authToken = 'b54494753f08165db6b3d796d5925cf85ae0990e';
+  //Size of String 'companyName' before Line break in Row
+  int LINEBREAKINTERVAL = 20;
 
   StockContainer({
     required this.stock,
@@ -102,6 +97,7 @@ class StockContainer extends StatelessWidget {
           MaterialPageRoute(builder: (context) => DetailedFinanceScreen()),
         );
       },
+      //Container description
       child: Column(
         children: [
           const Row(
@@ -113,16 +109,14 @@ class StockContainer extends StatelessWidget {
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-              ),
-              SizedBox(
-                width: 5,
-              ),
+              ),//Name
+              Spacer(),
               Text(
                 "Last sold Price",
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-              Spacer(),
+              ), //Price
+              SizedBox(width:20),
               Padding(
                 padding: const EdgeInsets.only(right: 15),
                 child: Text(
@@ -130,7 +124,7 @@ class StockContainer extends StatelessWidget {
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-              ),
+              ), //Button
             ],
           ),
           Container(
@@ -142,38 +136,41 @@ class StockContainer extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 20, top: 15, bottom: 15),
                   child: Text(
-                    stock.name,
-                    style: TextStyle(
+                    insertLineBreaks(stock.companyName, LINEBREAKINTERVAL),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                Spacer(),
+                ), //Name
+                const Spacer(),
                 Padding(
                   padding:
                       const EdgeInsets.only(top: 15, bottom: 15, right: 30),
                   child: Text(
                     stock.price.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 15,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                SizedBox(width: 8),
+                ), //Price
+                const SizedBox(width: 8),
                 Padding(
                   padding:
-                      const EdgeInsets.only(top: 15, bottom: 15, right: 10),
-                  child: Text(
-                    "${stock.priceMovement.value}",
-                    style: TextStyle(
-                      color: movementColor,
+                      const EdgeInsets.only(top: 15, bottom: 15),
+                  child: Container(
+                    width: 40,
+                    child: Text(
+                      "${stock.priceMovement.value}",
+                      style: TextStyle(
+                        color: movementColor,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(width: 8),
+                ),//Change Value
+                const SizedBox(width: 8),
                 /*
                 Padding(
                   padding:
@@ -184,7 +181,7 @@ class StockContainer extends StatelessWidget {
                       color: movementColor,
                     ),
                   ),
-                ), */
+                ), */ //Change percentage that was in for testing (maybe will become important again)
                 Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: Container(
@@ -199,7 +196,7 @@ class StockContainer extends StatelessWidget {
                             // Adjust the border radius as needed
                           ),
                         ),
-                        child: Align(
+                        child: const Align(
                           alignment: Alignment.center,
                           child: Icon(
                             Icons.favorite,
@@ -209,7 +206,7 @@ class StockContainer extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+                ),//AddButton
               ],
             ),
           ),
@@ -218,6 +215,18 @@ class StockContainer extends StatelessWidget {
     );
   }
 
+  String insertLineBreaks(String text, int breakInterval) {
+    StringBuffer result = StringBuffer();
+    for (int i = 0; i < text.length; i++) {
+      result.write(text[i]);
+      if ((i + 1) % breakInterval == 0 && i + 1 != text.length) {
+        result.write('...');
+        break;
+      }
+    }
+    return result.toString();
+  }
+  
   void addToWatchList() {
     // to remember whether the backend call has been done or not so the
     // list wont build multiple times
@@ -236,7 +245,7 @@ class StockContainer extends StatelessWidget {
       }
     }
 
-    if (stock.name == 'Unknown Stock Symbol') return;
+    if (stock.name == 'Unknown Stock Symbol' || stock.name == '') return;
     sendDataToServer();
     _financeController.favoritesList.add(stock);
     print('added: ' +
@@ -247,7 +256,7 @@ class StockContainer extends StatelessWidget {
 
   Future<void> sendDataToServer() async {
 
-    String host = 'localhost:8000';
+    String host = '192.168.0.244:8000';
     String path = '/api/FavStocks/';
     var uri = Uri.http(host, path);
 
@@ -265,7 +274,7 @@ class StockContainer extends StatelessWidget {
       );
       if(response.statusCode == 201) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
-        print('Server response: $responseData');
+        return;//print('Server response: $responseData');
       }
       if(response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
@@ -273,6 +282,7 @@ class StockContainer extends StatelessWidget {
       } else {
         throw Exception('Daten wurden nicht gesendet. Status code: ${response.statusCode}');
       }
+
     } catch (error) {
       throw Exception('Fehler beim senden der Daten: $error');
     }

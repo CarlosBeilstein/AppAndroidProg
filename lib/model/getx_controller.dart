@@ -20,6 +20,7 @@ class NewsController extends GetxController {
 class FinanceController extends GetxController {
 
   var called = false.obs;
+  var missingServer = false.obs;
   //values that the controller uses
   var name = ''.obs;
   var companyName = ''.obs;

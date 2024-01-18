@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
-
 import '../screens/news/news_screen_two.dart';
 
 class NewsService extends NewsScreenTwo {
@@ -14,7 +13,7 @@ class NewsService extends NewsScreenTwo {
   static Future<List<Map<String, dynamic>>> fetchNews(String country, String category, String searchedItem) async {
     //API key used for website (f at the very end after 197 to complete key)
     var apiKey = 'e1eedf371f2642df8eb2d1a0bffc197f';
-    //parse following link if searchbar hasn't been used
+    //parse following link if searchbar hasn't been used at all
     var uri = Uri.parse('https://newsapi.org/v2/top-headlines?country=$country&category=$category&apiKey=$apiKey');
     if(searchedItem.length > 0) {
       //use this link if searchbar has been used

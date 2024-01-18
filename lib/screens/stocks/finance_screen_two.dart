@@ -28,55 +28,6 @@ class _FinanceScreenState extends State<FinanceScreen> {
     //fetchFinances();
   }
 
-  Future<void> fetchFinances(String stockSymbol) async {
-    try {
-      var result = await FinanceService.fetchFinances(stockSymbol);
-      setState(() {
-        financeStock = result;
-      });
-    } catch (e, stackTrace) {
-      print('Error fetching finance data: $e');
-      print('Stacktrace $stackTrace');
-    }
-  }
-
-  Future<void> fetchDataFromApi() async {
-    try {
-      if (!_financeController.called.value) {
-        _financeController.called.value = true;
-        String host = 'localhost:8000';
-        String path = '/api/FavStocks/';
-
-        var uri = Uri.http(host, path);
-
-        final response = await http.get(uri);
-
-        if (response.statusCode == 200) {
-          final List<dynamic> data = jsonDecode(response.body);
-
-          List<Stock> stockList = [];
-
-          for (var stockData in data) {
-            Stock stock = Stock.fromJson(stockData);
-            stockList.add(stock);
-
-            bool stockExists = _financeController.favoritesList.any(
-                (existingStock) =>
-                    existingStock.companyName == stock.companyName);
-
-            if (!stockExists) _financeController.favoritesList.add(stock);
-          }
-
-          print('Fetched data: $data');
-        } else {
-          print('Failed to fetch data. Status code: ${response.statusCode}');
-        }
-      }
-    } catch (error) {
-      throw Exception('Server has probably not been started yet: $error');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
 
@@ -161,11 +112,66 @@ class _FinanceScreenState extends State<FinanceScreen> {
     );
   }
 
+  Future<void> fetchFinances(String stockSymbol) async {
+    try {
+      var result = await FinanceService.fetchFinances(stockSymbol);
+      setState(() {
+        financeStock = result;
+      });
+    } catch (e, stackTrace) {
+      print('Error fetching finance data: $e');
+      print('Stacktrace $stackTrace');
+    }
+  }
+
+  Future<void> fetchDataFromApi() async {
+    try {
+      if (!_financeController.called.value) {
+        _financeController.called.value = true;
+        String host = '192.168.0.244:8000';
+        String path = '/api/FavStocks/';
+
+        var uri = Uri.http(host, path);
+
+        final response = await http.get(uri);
+
+        if (response.statusCode == 200) {
+          final List<dynamic> data = jsonDecode(response.body);
+
+          List<Stock> stockList = [];
+
+          for (var stockData in data) {
+            Stock stock = Stock.fromJson(stockData);
+            stockList.add(stock);
+
+            bool stockExists = _financeController.favoritesList.any(
+                    (existingStock) =>
+                existingStock.companyName == stock.companyName);
+
+            if (!stockExists) _financeController.favoritesList.add(stock);
+          }
+
+          print('Fetched data: $data');
+        } else {
+          print('Failed to fetch data. Status code: ${response.statusCode}');
+        }
+      }
+    } catch (error) {
+      throw Exception('Server has probably not been started yet: $error');
+    }
+  }
+
   void goToFavorites() async {
-    await fetchDataFromApi();
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => FavoriteStocks()),
-    );
+    try {
+      await fetchDataFromApi();
+    } catch(error) {
+      _financeController.missingServer.value = true;
+      throw Exception('Server ist zur Zeit nicht online. Fehler: $error');
+    } finally {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => FavoriteStocks()),
+      );
+    }
   }
 }
