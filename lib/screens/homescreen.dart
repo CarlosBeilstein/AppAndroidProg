@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.white),
         title: Padding(
           padding: const EdgeInsets.only(right: 50.0),
-          child: Center(child: Text("Home", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+          child: Center(child: Text("", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
