@@ -4,33 +4,16 @@ Android App Dev
 
 ## Getting Started
 
-Die App für das Bachelor Wahlpflicht/ Pflichtmodul AndroidProgrammierung
+The app is my first project in flutter/dart programming.
 
-Drawer: 
+To get started, create an API token from IEX Cloud and newsapi.org and use it in finance_object as <apiKey> and news_object as <apiKey>
+
+if you want the stocks to be saved on AppClose, you'll have to clone https://github.com/CarlosBeilstein/backendApp and change
+    CORS_ALLOWED_ORIGINS in /backendServer/settings.py to your local host or IP address including the port that you're using on your browser
+    <username> in /backendApp/views.py to your own desired username
     
 
-BottomNavigationBar:
-    - Das linke Icon verlinkt zum Homescreen
-    - Das mittlere Icon verlinkt zum NewsScreen worüber man sich die neusten Nachrichten anzeigen
-    lassen kann
-    - Das rechte Icon verlinkt zum Financescreen welcher die gewünschten aktuellen Aktien Preise  
-    anzeigt
 
-HomeScreen:
-    
-
-NewsScreen:
-    SearchBar: Sucht nach Schlüsselwörtern in den gezielten Nachrichten
-    Radio1: Ermöglicht die Auswahl zwischen Nachrichten der 3 angegeben Ländern
-    Radio2: Ermöglicht die Auswahl zwischen Nachrichten der 4 angegeben Themen in den entsprechenden
-            Ländern
-            -> Nach Umstellen des Themenradio holt sich die App die entsprechenden News des Themas
-               im angegebenen Land (Leider nur eine begrenzte Anzahl an Abrufungen/Monat möglich)
-    Angebundene NewsAPI: https://newsapi.org/
-
-FinanceScreen:
-    SearchBar: Sucht nach einem Aktien SYMBOL! (Kein Firmenname) -> Apple Inc. = AAPL / Microsoft = MSFT ...
-               Bei Absenden der Abfrage wird ein Container angezeigt
 
 
     
