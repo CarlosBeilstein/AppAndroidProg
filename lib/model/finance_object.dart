@@ -7,9 +7,11 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class FinanceService extends FinanceScreen {
+
   static Future<Stock?> fetchFinances(String stockSymbol) async {
+    FinanceController _financeController = Get.find();
     try {
-      var apiKey = 'sk_7b9182ea04824f24b2518ddad1a94ddf';
+      var apiKey = 'pk_a5c75ce81e3e4cefba244b498ac0a820';
       var url = 'https://api.iex.cloud/v1/data/core/quote/MSFT?token=$apiKey';
       if (stockSymbol.length > 0) {
         url =
@@ -33,6 +35,25 @@ class FinanceService extends FinanceScreen {
             double price = firstObject['latestPrice'];
             double change = firstObject['change'];
             //double changePercent = firstObject['changePercent'].toDouble();
+
+            //detailed Finance Screen Infos fetched with same API but different link
+            var urlCompanyInfo = 'https://api.iex.cloud/v1/data/core/company/$stockSymbol?token=$apiKey';
+            var uriCompanyInfo = Uri.parse(urlCompanyInfo);
+            var responseCompanyInfo = await http.get(uriCompanyInfo);
+
+            if(responseCompanyInfo.statusCode == 200) {
+              var jsonResponseCompanyInfo = json.decode(responseCompanyInfo.body);
+              var companyInfoObject = jsonResponseCompanyInfo[0];
+
+              if(jsonResponseCompanyInfo != null) {
+                _financeController.ceo.value = companyInfoObject['ceo'];
+                _financeController.location.value = companyInfoObject['address'];
+                _financeController.country.value = companyInfoObject['country'];
+                _financeController.exchange.value = companyInfoObject['exchange'];
+                _financeController.industry.value = companyInfoObject['industry'];
+                _financeController.sector.value = companyInfoObject['sector'];
+              }
+            }
 
             return Stock(
               name: companySymbol,
@@ -61,7 +82,7 @@ class FinanceService extends FinanceScreen {
         throw Exception('Request failed with status: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error: $e');
+      //print('Error: $e');
       return null;
     }
   }
@@ -256,7 +277,7 @@ class StockContainer extends StatelessWidget {
 
   Future<void> sendDataToServer() async {
 
-    String host = '192.168.0.244:8000';
+    String host = '192.168.0.246:8000';
     String path = '/api/FavStocks/';
     var uri = Uri.http(host, path);
 

@@ -1,15 +1,12 @@
 
-Bitcoin einbinden
+1. Bitcoin einbinden
 
-List My Favorites in Backend
-+    my SQL Workbench
-+        datenbank erstellen
-+            Tabelle f[r favorites
-        Import mySQL ... package
-        (Passwort (Workbench) und IP (Rechner))
-        bei Appstart drauf zugreifen mit SQL statement  (select * from 'appdb.stockfavs') -> generell direkt in eine liste um zu loopen wegen Fav Icon
-            -> Add each line as object into list and add a gesture detector to the object
-        Bei Fav hinzufuegen auch ein SQL Statement um in tabelle einzufuegen (INSERT INTO `appdb`.`stockfavs` (`id`, `companyname`, `price`, `change`, `changepercent`) VALUES ('5', 'LOL', '23', '2', '2.1');)
-            -> either adding or removing from fav lists (also loop to know whether its already added (elevated button Icon))
+2. Firmen beschreibung
+
+3. Profile
+
+4. Drawer
+
+5. Presentation
 
 UPDATE

@@ -32,13 +32,13 @@ class _FavoriteStocksState extends State<FavoriteStocks> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black38,
-        iconTheme: IconThemeData(color: Colors.white),
-        title: Text("My favorites to watch",
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text("My favorites to watch",
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
-      drawer: MyDrawer(),
+      drawer: const MyDrawer(),
       body: Container(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: _financeController.missingServer == true
             ? const Center(
                 child: Text('Server is not online', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)
@@ -56,18 +56,6 @@ class _FavoriteStocksState extends State<FavoriteStocks> {
                           ? Colors.red
                           : Colors.green;
                   return GestureDetector(
-                    onTap: () {
-                      if(favoriteStock.companyName.length <= NAMESIZE) {
-                        _financeController.companyName.value = favoriteStock.companyName;
-                       } else {
-                        _financeController.companyName.value = favoriteStock.companyName.substring(0, NAMESIZE);
-                      }
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DetailedFinanceScreen()),
-                      );
-                    },
                     //Padding of the Favorite Stock Container Row
                     child: Padding(
                       padding: const EdgeInsets.only(top: 14.0),
@@ -179,16 +167,16 @@ class _FavoriteStocksState extends State<FavoriteStocks> {
     _financeController.called.value = false;
     setState(() {
       _financeController.favoritesList.remove(stock);
-      print(stock.name);
+      //print(stock.name);
     });
 
     await removeDataOnServer(stock);
   }
 
   Future<void> removeDataOnServer(Stock stock) async {
-    String host = '192.168.0.244:8000';
+    String host = '192.168.0.246:8000';
     String path = '/update/${stock.companyName}/';
-    print(host + path);
+    //print(host + path);
     var uri = Uri.http(host, path);
 
     try {
@@ -203,7 +191,7 @@ class _FavoriteStocksState extends State<FavoriteStocks> {
       );
       if (response.statusCode == 204) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
-        print('Server response: $responseData');
+        //print('Server response: $responseData');
       } else if(response.statusCode == 200) {
         //final Map<String, dynamic> responseData = jsonDecode(response.body);
         return; //print('Server response: $responseData');

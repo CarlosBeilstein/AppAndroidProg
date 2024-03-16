@@ -35,14 +35,14 @@ class _FinanceScreenState extends State<FinanceScreen> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black38,
-        iconTheme: IconThemeData(color: Colors.white),
-        title: Text("Finances",
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text("Finances",
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
         currentIndex: 2,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
             label: 'Home',
@@ -67,12 +67,12 @@ class _FinanceScreenState extends State<FinanceScreen> {
           } else if (index == 1) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => NewsScreenTwo()),
+              MaterialPageRoute(builder: (context) => const NewsScreenTwo()),
             );
           }
         },
       ),
-      drawer: MyDrawer(),
+      drawer: const MyDrawer(),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -89,7 +89,7 @@ class _FinanceScreenState extends State<FinanceScreen> {
                   ),
                   hintStyle: TextStyle(color: Colors.white),
                 ),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 onSubmitted: (query) {
                   fetchFinances(query);
                 },
@@ -106,7 +106,7 @@ class _FinanceScreenState extends State<FinanceScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: goToFavorites,
         backgroundColor: Colors.white,
-        child: Icon(Icons.favorite, color: Colors.black,),
+        child: const Icon(Icons.favorite, color: Colors.black,),
 
       ),
     );
@@ -119,8 +119,8 @@ class _FinanceScreenState extends State<FinanceScreen> {
         financeStock = result;
       });
     } catch (e, stackTrace) {
-      print('Error fetching finance data: $e');
-      print('Stacktrace $stackTrace');
+      //print('Error fetching finance data: $e');
+      //print('Stacktrace $stackTrace');
     }
   }
 
@@ -128,7 +128,7 @@ class _FinanceScreenState extends State<FinanceScreen> {
     try {
       if (!_financeController.called.value) {
         _financeController.called.value = true;
-        String host = '192.168.0.244:8000';
+        String host = '192.168.0.246:8000';
         String path = '/api/FavStocks/';
 
         var uri = Uri.http(host, path);
@@ -151,9 +151,9 @@ class _FinanceScreenState extends State<FinanceScreen> {
             if (!stockExists) _financeController.favoritesList.add(stock);
           }
 
-          print('Fetched data: $data');
+          //print('Fetched data: $data');
         } else {
-          print('Failed to fetch data. Status code: ${response.statusCode}');
+          //print('Failed to fetch data. Status code: ${response.statusCode}');
         }
       }
     } catch (error) {
@@ -170,7 +170,7 @@ class _FinanceScreenState extends State<FinanceScreen> {
     } finally {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => FavoriteStocks()),
+        MaterialPageRoute(builder: (context) => const FavoriteStocks()),
       );
     }
   }

@@ -80,10 +80,13 @@ class _NewsScreenState extends State<NewsScreenTwo> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        //To Hide the Hamburger Drawer Icon since I'm using the profile button
+        automaticallyImplyLeading: false,
+
         backgroundColor: Colors.black,
-        iconTheme: IconThemeData(color: Colors.white),
-        title: Padding(
-          padding: const EdgeInsets.only(right: 50),
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Padding(
+          padding: EdgeInsets.only(right: 50),
           child: Text("News", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         ),
       ),
@@ -91,7 +94,7 @@ class _NewsScreenState extends State<NewsScreenTwo> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
         currentIndex: 1,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
             label: 'Home',
@@ -119,7 +122,9 @@ class _NewsScreenState extends State<NewsScreenTwo> {
           }
         },
       ),
-      drawer: MyDrawer(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButton: const ProfileFloatingButton(),
+      drawer: const MyDrawer(),
       //Display of the newsContainer
       body: SingleChildScrollView(
         child: Column(

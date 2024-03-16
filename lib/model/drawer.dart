@@ -7,10 +7,51 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Drawer(
-
-      child: Column(
-        children: [],
-      ),
+      backgroundColor: Color.fromARGB(255, 73, 73, 73),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 15),
+            Text(
+              "Carlos Beilstein",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 23,
+              ),
+            ),
+            SizedBox(height: 15),
+            Text(
+              "Email: carlos.beilstein@informatik.hs-fulda.de",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+              ),
+            ),
+            SizedBox(height: 15),
+            Text(
+              "Settings",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+              ),
+            ),
+            SizedBox(height: 15),
+            Text(
+              "Account Info",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+              ),
+            ),
+          ],
+        ),
+      )
     );
   }
 }
@@ -22,12 +63,8 @@ class ProfileFloatingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton.small(
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const ProfileScreen()),
-        );
+        Scaffold.of(context).openDrawer();
       },
-
       backgroundColor: Colors.blue,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
       child: const Icon(Icons.person, color: Colors.white, size: 16),

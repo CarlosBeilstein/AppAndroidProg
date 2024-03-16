@@ -10,7 +10,6 @@ class DetailedFinanceScreen extends StatefulWidget {
 }
 
 class _DetailedFinanceState extends State<DetailedFinanceScreen> {
-
   FinanceController _financeController = Get.find();
 
   @override
@@ -19,15 +18,72 @@ class _DetailedFinanceState extends State<DetailedFinanceScreen> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        iconTheme: IconThemeData(color: Colors.white),
-        title: Text(_financeController.companyName.value, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text(
+          _financeController.companyName.value,
+          style:
+              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
       ),
-      body: Obx( () {
+      body: Obx(() {
         _financeController.changed();
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Ceo: " + _financeController.ceo.value,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    "Adresse: " + _financeController.location.value,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    "Land: " + _financeController.country.value,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    "Exchange: " + _financeController.exchange.value,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    "Industrie: " + _financeController.industry.value,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    "Sektor: " + _financeController.sector.value,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         );
