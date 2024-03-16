@@ -105,8 +105,8 @@ class _FinanceScreenState extends State<FinanceScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: goToFavorites,
-        backgroundColor: Colors.white,
-        child: const Icon(Icons.favorite, color: Colors.black,),
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.favorite, color: Colors.white,),
 
       ),
     );

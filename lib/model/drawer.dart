@@ -1,4 +1,3 @@
-import 'package:android_prog_app/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {

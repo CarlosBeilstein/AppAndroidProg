@@ -142,10 +142,10 @@ class _FavoriteStocksState extends State<FavoriteStocks> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: pageBack,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         child: const Icon(
           Icons.arrow_back,
-          color: Colors.black,
+          color: Colors.white,
         ),
       ),
     );

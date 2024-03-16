@@ -60,7 +60,7 @@ class NewsService extends NewsScreenTwo {
 //to build my own newsContainer
 class NewsContainer extends StatelessWidget {
 
-  var _newsController = Get.put(NewsController());
+  final _newsController = Get.put(NewsController());
 
   late String author;
   late String title;
@@ -97,8 +97,8 @@ class NewsContainer extends StatelessWidget {
       },
       //Layout of the NewsContainer
       child: Container(
-        padding: EdgeInsets.all(16),
-        margin: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
@@ -107,7 +107,7 @@ class NewsContainer extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 5,
-              offset: Offset(0, 3),
+              offset: const Offset(0, 3),
             ),
           ],
         ),
@@ -123,27 +123,27 @@ class NewsContainer extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    '$author',
+                    author,
                     style: GoogleFonts.lato(
-                      textStyle: TextStyle(fontWeight: FontWeight.bold),
+                      textStyle: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
-                    '$publishedAt',
+                    publishedAt,
                     style: GoogleFonts.lato(),
                   )
                 ],
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               'Title: $title',
               style: GoogleFonts.playfairDisplay(
-                textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               )
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               'Description: $description',
               style: GoogleFonts.lato(),
